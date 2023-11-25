@@ -11,10 +11,12 @@ class Pessoa extends model{
 		$sql->bindValue(":sexo"    , $sexo);
 		$sql->bindValue(":endereco", $endereco);
 		$sql->execute();
+
+		return $this->db->lastInsertId();
 	}
 
 	public function editar($id_pessoa,$nome,$idade,$sexo,$endereco){
-		$sql = "UPDATE pessoa 
+		$sql = "UPDATE pessoa
 		           SET nome     = :nome
 		             , idade    = :idade
 		             , sexo     = :sexo
@@ -30,20 +32,29 @@ class Pessoa extends model{
 		$sql->execute();
 	}
 
-	public function excluir($id_pessoa){
-		$sql = "DELETE FROM pessoa WHERE id_pessoa = :id_pessoa";
+	public function imagem($id_pessoa,$url_foto){
+		$sql = "UPDATE pessoa
+		           SET url_foto  = :url_foto
+		         WHERE id_pessoa = :id_pessoa";
 
 		$sql = $this->db->prepare($sql);
-
+		$sql->bindValue(":url_foto" , $url_foto);
 		$sql->bindValue(":id_pessoa", $id_pessoa);
 		$sql->execute();
 	}
 
+	public function excluir($id_pessoa){
+		$sql = "DELETE FROM pessoa WHERE id_pessoa = :id_pessoa";
+
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(":id_pessoa", $id_pessoa);
+		$sql->execute();
+	}
 
 	public function get($id_pessoa){
 		$array = array();
 
-		$sql = "SELECT * 
+		$sql = "SELECT *
 		          FROM pessoa
 		         WHERE id_pessoa = :id_pessoa";
 		$sql = $this->db->prepare($sql);
@@ -52,7 +63,7 @@ class Pessoa extends model{
 
 		if($sql->rowCount() > 0){
 			$array = $sql->fetch(\PDO::FETCH_ASSOC);
-		}		
+		}
 
 		return $array;
 	}
@@ -65,7 +76,7 @@ class Pessoa extends model{
 
 		if($sql->rowCount() > 0){
 			$array = $sql->fetchAll(\PDO::FETCH_ASSOC);
-		}		
+		}
 
 		return $array;
 	}

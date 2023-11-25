@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+footer {
+  background-color: black;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: #fff;
+  text-align: center;
+}
+
+form {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+form .form-group {
+  margin-bottom: 13px;
+}
+
+form a,
+form button {
+  margin-right: 10px;
+}
